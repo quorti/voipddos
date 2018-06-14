@@ -1,0 +1,7 @@
+---
+- hosts: pis
+  tasks:
+    - name: Update repositories cache
+      shell: apt-get update
+    - name: Upgrade system
+      shell: apt-get upgrade -y
