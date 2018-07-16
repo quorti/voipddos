@@ -1,0 +1,14 @@
+---
+- hosts: pis
+  tasks:
+    - name: Install python3 interpreter
+      apt:
+        name: python3
+        state: present
+    - name: Copy python script to client
+      copy:
+        src: register-flooder
+        dest: ~/register-flooder
+        mode: 0644
+    - name: Start Register-DOS
+      shell: python3 ~/register-flooder/flood.py {{DST_IP}}
