@@ -8,7 +8,7 @@
     - name: Copy python script to client
       copy:
         src: register-flooder
-        dest: ~/register-flooder
+        dest: /root/
         mode: 0644
     - name: Start Register-DOS
-      shell: python3 ~/register-flooder/flood.py {{DST_IP}}
+      shell: python3 /root/register-flooder/flood.py {{DST_IP}}
